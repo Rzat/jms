@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JmsApplication {
 
     public static void main(String[] args) throws Exception {
+        // This configuration is for temporary server.
         ActiveMQServer server = ActiveMQServers.newActiveMQServer(new ConfigurationImpl()
                 .setPersistenceEnabled(false)
                 .setJournalDirectory("target/data/journal")

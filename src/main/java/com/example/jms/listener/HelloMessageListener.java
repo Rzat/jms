@@ -29,15 +29,20 @@ public class HelloMessageListener {
 
     @JmsListener(destination = JmsConfig.MY_SND_RCV_QUEUE)
     public void listenForHello(@Payload HelloMessage helloMessage,
-                               @Headers MessageHeaders headers, Message message) throws JMSException {
+                               @Headers MessageHeaders headers, Message message,
+                               org.springframework.messaging.Message springMessage) throws JMSException {
         HelloMessage payloadMessage = HelloMessage
                 .builder()
                 .id(UUID.randomUUID())
                 .message("World!")
                 .build();
+//Spring way of sending message
+        // jmsTemplate.convertAndSend((Destination) springMessage.getHeaders().get("jms_replyTo"), "got it");
 
+
+        //jms way of sending message
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), payloadMessage);
-        System.out.println("I got a message");
-        System.out.println(helloMessage);
+        //System.out.println("I got a message");
+        // System.out.println(helloMessage);
     }
 }
